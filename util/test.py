@@ -17,5 +17,5 @@ ms.echo('§4[§c❤🍰 §lBerryCake §c🍰❤§4]§f')
 
 
 # contenders
-ms.echo('§4[§c❤§lBerryCake§c❤§4]§f')
+ms.echo('§4[§c§lBerryCake§c❤§4]§f')
 ms.echo('§d[§5✿ §lBerry§fCake §5✿§d]§r')
