@@ -3,7 +3,7 @@ import time
 import keyboard
 import json
 import os
-import pathfinder as pf
+import berrycake_utils.pathfinder as pf
 
 
 class WorldDB:
@@ -235,44 +235,34 @@ class WorldDB:
         self.world_db = deserialized    
 
     # ---------------------------------------------------
-    # MAIN LOOP
+    # MAIN LOOP - wil be run in the berrycake client main loop
     # ---------------------------------------------------
 
     def run(self):
         """Main loop: load nearby chunks, unload far ones, repeat forever."""
-        ms.execute("\safetycheck")
-        while self.running:
-            start_time_cycle = time.time()
 
-            # Step 1: Identify which chunks should be loaded
-            self.generate_chunk_origins()
-            #for chunk in [i for i in self.world_db.keys()]:
-            #    ms.execute(f'/fill {chunk[0]} {chunk[1]} {chunk[2]} {chunk[0] + 15} {chunk[1]} {chunk[2] + 15} minecraft:diamond_block')
+        start_time_cycle = time.time()
+        # Step 1: Identify which chunks should be loaded
+        self.generate_chunk_origins()
+        #for chunk in [i for i in self.world_db.keys()]:
+        #    ms.execute(f'/fill {chunk[0]} {chunk[1]} {chunk[2]} {chunk[0] + 15} {chunk[1]} {chunk[2] + 15} minecraft:diamond_block')
+        # Step 2: Remove chunks that are too far away
+        self.unload_chunks()
+        # Step 3: Load chunks not yet loaded
+        self.generate_world()
+        
 
-
-            # Step 2: Remove chunks that are too far away
-            self.unload_chunks()
-
-
-            # Step 3: Load chunks not yet loaded
-            self.generate_world()
-            
- 
-            ## Step 4: Print debug info
-            ms.echo(f'Done 1 cycle in {time.time() - start_time_cycle:.2f} secs')
-            ms.echo(f'Loaded chunks: {len(self.world_db)}')
-            ms.echo(self.render_distance)
-
-            # keyboard_input
-            if keyboard.is_pressed('up'):
-                self.render_distance += 1
-            elif keyboard.is_pressed('down'):
-                if self.render_distance > 0:
-                    self.render_distance -= 1
-            elif keyboard.is_pressed('p'):
-                ms.echo('p pressed')
-                pf.debug_glow_path(pf.find_path(ms.player_position(), [-479, 100, -151], self.world_db))
-                ms.echo('done')
-                time.sleep(10)
-wdb = WorldDB()
-wdb.run()
+        ## Step 4: Print debug info
+        ms.echo(f'Done 1 cycle in {time.time() - start_time_cycle:.2f} secs')
+        ms.echo(f'Loaded chunks: {len(self.world_db)}')
+        ms.echo(self.render_distance)
+        # keyboard_input
+        if keyboard.is_pressed('up'):
+            self.render_distance += 1
+        elif keyboard.is_pressed('down'):
+            if self.render_distance > 0:
+                self.render_distance -= 1
+        elif keyboard.is_pressed('p'):
+            ms.echo('p pressed')
+            pf.debug_glow_path(pf.find_path(ms.player_position(), [-479, 100, -151], self.flattend()))
+            ms.echo('done')
