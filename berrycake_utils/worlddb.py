@@ -3,7 +3,7 @@ import time
 import keyboard
 import json
 import os
-import pathfinder as pf
+import berrycake_utils.pathfinder as pf
 
 
 class WorldDB:
@@ -253,9 +253,9 @@ class WorldDB:
         
 
         ## Step 4: Print debug info
-        ms.echo(f'Done 1 cycle in {time.time() - start_time_cycle:.2f} secs')
-        ms.echo(f'Loaded chunks: {len(self.world_db)}')
-        ms.echo(self.render_distance)
+        #ms.echo(f'Done 1 cycle in {time.time() - start_time_cycle:.2f} secs')
+        #ms.echo(f'Loaded chunks: {len(self.world_db)}')
+        #ms.echo(self.render_distance)
         # keyboard_input
         if keyboard.is_pressed('up'):
             self.render_distance += 1
@@ -264,5 +264,5 @@ class WorldDB:
                 self.render_distance -= 1
         elif keyboard.is_pressed('p'):
             ms.echo('p pressed')
-            pf.debug_glow_path(pf.find_path(ms.player_position(), [-479, 100, -151], self.flattend()))
+            pf.debug_glow_path(pf.find_path(ms.player_position(), [-456, 98, 104], self.flattend()))
             ms.echo('done')

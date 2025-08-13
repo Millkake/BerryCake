@@ -3,7 +3,7 @@ import time
 import keyboard
 import json
 import os
-from worlddb import WorldDB
+from berrycake_utils.worlddb import WorldDB
 
 class BerryCake:
     def __init__(self):
@@ -20,3 +20,9 @@ class BerryCake:
         ms.execute('\safetycheck')
         while self.running:
             self.world_db.run()
+
+
+
+
+berrycake = BerryCake()
+berrycake.run()
