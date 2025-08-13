@@ -3,7 +3,7 @@ import time
 import keyboard
 import json
 import os
-import berrycake_utils.pathfinder as pf
+import pathfinder as pf
 
 
 class WorldDB:

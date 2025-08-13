@@ -3,7 +3,7 @@ import time
 import keyboard
 import json
 import os
-from berrycake_utils.worlddb import WorldDB
+from worlddb import WorldDB
 
 class BerryCake:
     def __init__(self):
@@ -16,5 +16,7 @@ class BerryCake:
 
     def run(self):
         # main loop, add functionality in here that needs to be ran continuously
+        # safety - kills immeadiatley on press of 'q'
+        ms.execute('\safetycheck')
         while self.running:
             self.world_db.run()

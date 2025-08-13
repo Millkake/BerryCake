@@ -1,5 +1,5 @@
 import system.lib.minescript as ms
-from berrycake_utils.camctrl import CameraControl
+from camctrl import CameraControl
 
 
 def walk_path(path, sprint=False):
