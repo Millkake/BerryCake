@@ -126,6 +126,7 @@ def find_path(start_pos, end_pos, world_data, max_nodes=2500000):
 
     nodes_processed = 0
     start_time = time.time()
+    minescript.echo(f'§d[§5✿ §lBerry§fCake §5✿§d]§r ')
 
     while open_heap:
         # timeout guard by time
@@ -142,7 +143,7 @@ def find_path(start_pos, end_pos, world_data, max_nodes=2500000):
 
         nodes_processed += 1
         if nodes_processed > max_nodes:
-            minescript.echo("find_path: exceeded max nodes")
+            minescript.echo(f'§d[§5✿ §lBerry§fCake §5✿§d]§r max nodes processed: TERMINATING PATHFINDER')
             return []
 
         # reached target
@@ -152,6 +153,8 @@ def find_path(start_pos, end_pos, world_data, max_nodes=2500000):
             while cur:
                 path.append(cur.position)
                 cur = cur.parent
+            minescript.echo(f'§d[§5✿ §lBerry§fCake §5✿§d]§r nodes processed:  {nodes_processed} in {time.time() - start_time}')
+            minescript.echo(f'§d[§5✿ §lBerry§fCake §5✿§d]§r {len(path)} path length')
             return path[::-1]
 
         (x, y, z) = current_node.position
@@ -193,10 +196,11 @@ def find_path(start_pos, end_pos, world_data, max_nodes=2500000):
                     open_dict[neighbor_pos] = neighbor_node
 
     # no path found
+    minescript.echo('§d[§5✿ §lBerry§fCake §5✿§d]§r No path found :( TERMINATING PATHFINDER')
     return []
 
 def debug_glow_path(path, delay=0.05):
-    minescript.echo('starting debug')
+    minescript.echo(f'§d[§5✿ §lBerry§fCake §5✿§d]§r starting visualisation')
     minescript.echo(path)
     for block in path:
         minescript.execute(f'/fill {block[0]} {block[1]} {block[2]} {block[0]} {block[1]} {block[2]} minecraft:glowstone')

@@ -263,6 +263,6 @@ class WorldDB:
             if self.render_distance > 0:
                 self.render_distance -= 1
         elif keyboard.is_pressed('p'):
-            ms.echo('p pressed')
+            ms.echo('§d[§5✿ §lBerry§fCake §5✿§d]§r Pathfinding...')
             pf.debug_glow_path(pf.find_path(ms.player_position(), [-456, 98, 104], self.flattend()))
-            ms.echo('done')
+            ms.echo('§d[§5✿ §lBerry§fCake §5✿§d]§r Pathfinding DONE')

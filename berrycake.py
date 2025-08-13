@@ -7,6 +7,7 @@ from berrycake_utils.worlddb import WorldDB
 
 class BerryCake:
     def __init__(self):
+        ms.echo('§d[§5✿ §lBerry§fCake §5✿§d]§r launched BerryCake')
         # setup variables
         self.running = True
 
