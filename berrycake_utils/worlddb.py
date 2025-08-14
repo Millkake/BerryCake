@@ -252,9 +252,9 @@ class WorldDB:
                 ms.echo(f'§4[§c§lBerryCake§c❤§4]§f tried {self.repath_times}: limit reached... TERMINATING PATHFINDER')
             
             ms.echo('§4[§c§lBerryCake§c❤§4]§f REPATHING...')
+            self.repath_times += 1
             path = pf.find_path(ms.player_position(), goal, self.flattend())
             walker = Walker(path, self.world_db)
-            self.repath_times += 1
 
 
         ms.echo('§4[§c§lBerryCake§c❤§4]§f Pathfinding DONE')
