@@ -16,7 +16,7 @@ class Walker:
 
         return new_path
 
-    def walk(self, close_distance=1, timer_per_block=1.5, repathing_dist=3):
+    def walk(self, close_distance=1, timer_per_block=1.5, repathing_dist=4.5):
         for coord in self.path:
             target_orientation = CameraControl.calculate_orientation(coord)
 
