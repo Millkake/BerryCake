@@ -88,4 +88,4 @@ class CameraControl:
             time.sleep(0.006)
         return True
 
-CameraControl.lock_target(CameraControl.calculate_orientation(target_pos=CameraControl.target_entity('Iron Golem')))
+#CameraControl.lock_target(CameraControl.calculate_orientation(target_pos=CameraControl.target_entity('Iron Golem')))

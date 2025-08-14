@@ -4,6 +4,7 @@ import keyboard
 import json
 import os
 import berrycake_utils.pathfinder as pf
+from berrycake_utils.walker import Walker
 
 
 class WorldDB:
@@ -22,7 +23,7 @@ class WorldDB:
         - A set number of chunks around the player are kept loaded in memory.
     """
 
-    def __init__(self, world_center=[0, 128, 0], xsize=16, y_bottom=-64, y_top=150, zsize=16):
+    def __init__(self, world_center=[0, 128, 0], xsize=16, y_bottom=-64, y_top=150, zsize=16, render_distance=8):
         """
         Initialize the database.
         
@@ -45,13 +46,16 @@ class WorldDB:
         self.z_search = list(range(0, zsize))
 
         # render distance for loading and unloading
-        self.render_distance = 10
+        self.render_distance = render_distance
 
         # Set of chunk origin positions currently tracked
         self.chunk_origins_coll = set()
 
         # Main database: {chunk_origin: {block_coord: block_type}}
         self.world_db = {}
+
+        # pathing variables
+        self.repath_times = 0
 
     # ---------------------------------------------------
     # CHUNK HANDLING
@@ -234,6 +238,28 @@ class WorldDB:
 
         self.world_db = deserialized    
 
+    
+    def pathfind_walk_to(self, goal=[1163, 88, 532], sprinting=False, briding=False, repath_attempts=6):
+        ms.echo('§4[§c§lBerryCake§c❤§4]§f Pathfinding...')
+        path = pf.find_path(ms.player_position(), goal, self.flattend())
+        walker = Walker(path, self.world_db)
+
+        while True:
+            result = walker.walk()
+            if result != "stuck":
+                break  # done walking
+            if self.repath_times >= repath_attempts:
+                ms.echo(f'§4[§c§lBerryCake§c❤§4]§f tried {self.repath_times}: limit reached... TERMINATING PATHFINDER')
+            
+            ms.echo('§4[§c§lBerryCake§c❤§4]§f REPATHING...')
+            path = pf.find_path(ms.player_position(), goal, self.flattend())
+            walker = Walker(path, self.world_db)
+            self.repath_times += 1
+
+
+        ms.echo('§4[§c§lBerryCake§c❤§4]§f Pathfinding DONE')
+
+
     # ---------------------------------------------------
     # MAIN LOOP - wil be run in the berrycake client main loop
     # ---------------------------------------------------
@@ -264,5 +290,17 @@ class WorldDB:
                 self.render_distance -= 1
         elif keyboard.is_pressed('p'):
             ms.echo('§4[§c§lBerryCake§c❤§4]§f Pathfinding...')
-            pf.debug_glow_path(pf.find_path(ms.player_position(), [-456, 98, 104], self.flattend()))
+            path = pf.find_path(ms.player_position(), [1163, 88, 532], self.flattend())
+            walker = Walker(path, self.world_db)
+
+            while True:
+                result = walker.walk()
+                if result != "stuck":
+                    break  # done walking
+                
+                ms.echo('§4[§c§lBerryCake§c❤§4]§f REPATHING...')
+                path = pf.find_path(ms.player_position(), [1163, 88, 532], self.flattend())
+                walker = Walker(path, self.world_db)
+
+
             ms.echo('§4[§c§lBerryCake§c❤§4]§f Pathfinding DONE')
